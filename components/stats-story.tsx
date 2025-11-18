@@ -9,6 +9,7 @@ interface StatsStoryProps {
   stats: ActivityStats
   onReset: () => void
   onComplete: () => void
+  name: string
 }
 
 function formatTime(seconds: number): string {
@@ -28,7 +29,7 @@ interface StorySlide {
   bgClass: string
 }
 
-export default function StatsStory({ stats, onReset, onComplete }: StatsStoryProps) {
+export default function StatsStory({ stats, onReset, onComplete, name }: StatsStoryProps) {
   const [currentSlide, setCurrentSlide] = useState(0)
   const displayStats = calculateFilteredStats(stats, null)
 
@@ -41,8 +42,8 @@ export default function StatsStory({ stats, onReset, onComplete }: StatsStoryPro
       bgClass: "bg-black",
       content: (
         <div className="text-center">
-          <p className="text-6xl font-black mb-4 tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-white">
-            YEAR IN SPORT
+          <p className="text-6xl font-black mb-4 tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-white uppercase">
+            {name}'S YEAR IN SPORT
           </p>
           <p className="text-xl text-muted-foreground">Ready to see your stats?</p>
         </div>

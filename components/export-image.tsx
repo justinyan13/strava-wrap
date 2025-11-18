@@ -6,6 +6,7 @@ import { calculateFilteredStats } from "@/lib/csv-parser"
 interface ExportImageProps {
   stats: ActivityStats
   activityType?: string | null
+  name: string
 }
 
 function formatTime(seconds: number): string {
@@ -17,7 +18,7 @@ function formatTime(seconds: number): string {
   return `${minutes}m`
 }
 
-export default function ExportImage({ stats, activityType = null }: ExportImageProps) {
+export default function ExportImage({ stats, activityType = null, name }: ExportImageProps) {
   const displayStats = calculateFilteredStats(stats, activityType)
 
   return (
@@ -57,7 +58,7 @@ export default function ExportImage({ stats, activityType = null }: ExportImageP
             </h1>
             <div className="flex items-center gap-4">
               <div className="h-1 w-24 bg-blue-500"></div>
-              <h2 className="text-4xl font-bold text-blue-500 tracking-widest uppercase">Year in Sport</h2>
+              <h2 className="text-4xl font-bold text-blue-500 tracking-widest uppercase">{name}'s Year in Sport</h2>
             </div>
           </div>
 

@@ -10,9 +10,11 @@ export default function Home() {
   const [stats, setStats] = useState<ActivityStats | null>(null)
   const [loading, setLoading] = useState(false)
   const [showSummary, setShowSummary] = useState(false)
+  const [userName, setUserName] = useState("")
 
-  const handleSubmit = async (files: File[]) => {
+  const handleSubmit = async (files: File[], name: string) => {
     setLoading(true)
+    setUserName(name)
     try {
       const formData = new FormData()
       files.forEach((file) => {
@@ -45,6 +47,7 @@ export default function Home() {
   const handleReset = () => {
     setStats(null)
     setShowSummary(false)
+    setUserName("")
   }
 
   return (
@@ -52,12 +55,13 @@ export default function Home() {
       {!stats ? (
         <UploadZone onSubmit={handleSubmit} loading={loading} />
       ) : showSummary ? (
-        <StatsDisplay stats={stats} onReset={handleReset} />
+        <StatsDisplay stats={stats} onReset={handleReset} name={userName} />
       ) : (
-        <StatsStory 
-          stats={stats} 
-          onReset={handleReset} 
+        <StatsStory
+          stats={stats}
+          onReset={handleReset}
           onComplete={() => setShowSummary(true)}
+          name={userName}
         />
       )}
     </main>

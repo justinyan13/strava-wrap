@@ -18,6 +18,7 @@ import { cn } from "@/lib/utils"
 interface StatsDisplayProps {
   stats: ActivityStats
   onReset: () => void
+  name: string
 }
 
 function formatTime(seconds: number): string {
@@ -29,15 +30,15 @@ function formatTime(seconds: number): string {
   return `${minutes}m`
 }
 
-export default function StatsDisplay({ stats, onReset }: StatsDisplayProps) {
+export default function StatsDisplay({ stats, onReset, name }: StatsDisplayProps) {
   const [selectedActivityType, setSelectedActivityType] = useState<string>("All")
   const [isExporting, setIsExporting] = useState(false)
   const exportRef = useRef<HTMLDivElement>(null)
   const exportImageRef = useRef<HTMLDivElement>(null)
-  
+
   // Calculate filtered stats based on selected activity type
   const displayStats = calculateFilteredStats(stats, selectedActivityType === "All" ? null : selectedActivityType)
-  
+
   // Get all available activity types
   const activityTypes = ["All", ...stats.activityTypes.map((t) => t.name)]
 
@@ -46,26 +47,26 @@ export default function StatsDisplay({ stats, onReset }: StatsDisplayProps) {
       alert("Export element not found. Please refresh the page and try again.")
       return
     }
-    
+
     setIsExporting(true)
-    
+
     try {
       const element = exportImageRef.current
-      
+
       // Temporarily move into viewport for capture
       const originalLeft = element.style.left
       const originalTop = element.style.top
       const originalZIndex = element.style.zIndex
-      
+
       element.style.left = '0px'
       element.style.top = '0px'
       element.style.zIndex = '-9999'
-      
+
       await new Promise(resolve => setTimeout(resolve, 200))
-      
+
       void element.offsetWidth
       void element.offsetHeight
-      
+
       const dataUrl = await toPng(element, {
         backgroundColor: '#000000', // Will be covered by component background
         pixelRatio: 2,
@@ -76,22 +77,22 @@ export default function StatsDisplay({ stats, onReset }: StatsDisplayProps) {
           transform: 'scale(1)',
         },
       })
-      
+
       element.style.left = originalLeft
       element.style.top = originalTop
       element.style.zIndex = originalZIndex
-      
+
       if (!dataUrl || dataUrl === "data:,") {
         throw new Error("Failed to generate image")
       }
-      
+
       const link = document.createElement("a")
       link.download = `strava-wrapped-${selectedActivityType === "All" ? "all" : selectedActivityType}-${new Date().getTime()}.png`
       link.href = dataUrl
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
-      
+
     } catch (error) {
       console.error("Error exporting image:", error)
       alert(`Failed to export image: ${error instanceof Error ? error.message : "Unknown error"}`)
@@ -103,9 +104,9 @@ export default function StatsDisplay({ stats, onReset }: StatsDisplayProps) {
   return (
     <>
       {/* Export image component - positioned off-screen */}
-      <div 
+      <div
         className="fixed pointer-events-none"
-        style={{ 
+        style={{
           left: '-9999px',
           top: '0',
           width: '1200px',
@@ -115,26 +116,27 @@ export default function StatsDisplay({ stats, onReset }: StatsDisplayProps) {
         }}
         ref={exportImageRef}
       >
-        <ExportImage 
-          stats={stats} 
+        <ExportImage
+          stats={stats}
           activityType={selectedActivityType === "All" ? null : selectedActivityType}
+          name={name}
         />
       </div>
 
       <div className="min-h-screen bg-transparent py-12 px-4">
         <div className="max-w-6xl mx-auto space-y-12" ref={exportRef}>
-          
+
           {/* Header */}
           <div className="flex flex-col md:flex-row justify-between items-end gap-6 border-b border-white/10 pb-8">
             <div>
               <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50 mb-2">
                 2025
               </h1>
-              <h2 className="text-2xl md:text-3xl font-bold text-primary tracking-tight neon-text">
-                YEAR IN SPORT
+              <h2 className="text-2xl md:text-3xl font-bold text-primary tracking-tight neon-text uppercase">
+                {name}'S YEAR IN SPORT
               </h2>
             </div>
-            
+
             <div className="flex flex-wrap gap-3 items-center">
               <Select value={selectedActivityType} onValueChange={setSelectedActivityType}>
                 <SelectTrigger className="w-[180px] bg-card/50 border-white/10 backdrop-blur-md">
@@ -148,7 +150,7 @@ export default function StatsDisplay({ stats, onReset }: StatsDisplayProps) {
                   ))}
                 </SelectContent>
               </Select>
-              
+
               <Button
                 onClick={handleExport}
                 disabled={isExporting}
@@ -156,7 +158,7 @@ export default function StatsDisplay({ stats, onReset }: StatsDisplayProps) {
               >
                 {isExporting ? "INITIALIZING..." : "EXPORT HUD"}
               </Button>
-              
+
               <Button
                 onClick={onReset}
                 variant="outline"
@@ -169,7 +171,7 @@ export default function StatsDisplay({ stats, onReset }: StatsDisplayProps) {
 
           {/* Bento Grid Layout */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 auto-rows-[minmax(180px,auto)]">
-            
+
             {/* Total Activities - Large Square */}
             <div className="glass-panel p-8 rounded-3xl md:col-span-2 md:row-span-2 flex flex-col justify-between group hover:border-primary/50 transition-all duration-500">
               <div className="flex justify-between items-start">
@@ -189,7 +191,7 @@ export default function StatsDisplay({ stats, onReset }: StatsDisplayProps) {
             {/* Total Distance - Tall */}
             <div className="glass-panel p-6 rounded-3xl md:col-span-1 md:row-span-2 flex flex-col justify-between group hover:border-chart-2/50 transition-all duration-500 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-chart-2/20 blur-[50px] rounded-full -mr-16 -mt-16 pointer-events-none"></div>
-              
+
               <div className="relative z-10">
                 <div className="text-4xl mb-4">👟</div>
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-1">Distance</p>
@@ -198,7 +200,7 @@ export default function StatsDisplay({ stats, onReset }: StatsDisplayProps) {
                   <span className="text-lg text-muted-foreground ml-1">km</span>
                 </p>
               </div>
-              
+
               <div className="w-full bg-white/5 h-32 rounded-xl mt-4 relative overflow-hidden">
                 {/* Decorative bar chart visualization */}
                 <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between px-2 pb-2 h-full gap-1">
@@ -229,7 +231,7 @@ export default function StatsDisplay({ stats, onReset }: StatsDisplayProps) {
             </div>
 
             {/* Middle Row */}
-            
+
             {/* Favorite Activity */}
             {selectedActivityType === "All" && (
               <div className="glass-panel p-6 rounded-3xl md:col-span-2 flex items-center justify-between group hover:border-chart-5/50 transition-all duration-500">
@@ -264,7 +266,7 @@ export default function StatsDisplay({ stats, onReset }: StatsDisplayProps) {
             {displayStats.longestActivity.distance > 0 && (
               <div className="glass-panel p-8 rounded-3xl md:col-span-4 relative overflow-hidden group hover:border-white/30 transition-all duration-500">
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
+
                 <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                   <div>
                     <div className="flex items-center gap-3 mb-2">
@@ -274,7 +276,7 @@ export default function StatsDisplay({ stats, onReset }: StatsDisplayProps) {
                     <h3 className="text-3xl md:text-4xl font-bold text-white mb-2">{displayStats.longestActivity.name}</h3>
                     <p className="text-primary font-medium">{displayStats.longestActivity.type}</p>
                   </div>
-                  
+
                   <div className="flex gap-8 md:gap-12 text-right">
                     <div>
                       <p className="text-xs text-muted-foreground uppercase mb-1">Distance</p>
