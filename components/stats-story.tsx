@@ -118,7 +118,7 @@ export default function StatsStory({ stats, onReset, onComplete }: StatsStoryPro
     },
     {
       id: "longest-distance",
-      title: "Longest Run",
+      title: "Longest Workout",
       emoji: "🏆",
       bgClass: "bg-black",
       content: displayStats.longestActivity.distance > 0 ? (
