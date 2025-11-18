@@ -85,6 +85,23 @@ export default function StatsStory({ stats, onReset, onComplete }: StatsStoryPro
       ),
     },
     {
+      id: "total-calories",
+      title: "Calories Burned",
+      emoji: "🔥",
+      bgClass: "bg-black",
+      content: (
+        <div className="text-center">
+          <p className="text-8xl font-black mb-4 text-orange-500 neon-text">{displayStats.totalCalories.toLocaleString()}</p>
+          <p className="text-2xl text-white/80 font-mono uppercase tracking-widest mb-6">calories torched</p>
+          <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm inline-block">
+            <p className="text-lg text-white/90 font-medium">
+              That's about <span className="text-orange-400 font-bold">{Math.round(displayStats.totalCalories / 190)}</span> Krispy Kreme donuts 🍩
+            </p>
+          </div>
+        </div>
+      ),
+    },
+    {
       id: "favorite-activity",
       title: "Top Sport",
       emoji: "🏅",

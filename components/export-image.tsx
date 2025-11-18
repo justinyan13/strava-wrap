@@ -133,8 +133,13 @@ export default function ExportImage({ stats, activityType = null }: ExportImageP
 
         {/* Footer Decor */}
         <div className="mt-12 flex justify-between items-end opacity-50">
-          <div className="font-mono text-sm text-white">
-            ID: {Math.random().toString(36).substr(2, 9).toUpperCase()} // GEN: V0.APP
+          <div className="flex flex-col">
+            <div className="font-mono text-xl text-white tracking-widest">
+              stravawrap.vercel.app
+            </div>
+            <div className="font-mono text-xs text-white/40 mt-1">
+              ID: {Math.random().toString(36).substr(2, 9).toUpperCase()}
+            </div>
           </div>
           <div className="flex gap-2">
             {[...Array(5)].map((_, i) => (
