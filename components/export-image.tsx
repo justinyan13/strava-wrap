@@ -18,6 +18,15 @@ function formatTime(seconds: number): string {
   return `${minutes}m`
 }
 
+function getTier(count: number) {
+  if (count >= 250) return { tier: 'S', label: 'God-tier', color: 'bg-gradient-to-br from-yellow-600 to-purple-600' }
+  if (count >= 150) return { tier: 'A', label: 'Excellent', color: 'bg-gradient-to-br from-green-600 to-emerald-800' }
+  if (count >= 100) return { tier: 'B', label: 'Good', color: 'bg-gradient-to-br from-blue-600 to-cyan-800' }
+  if (count >= 50) return { tier: 'C', label: 'Average', color: 'bg-gradient-to-br from-yellow-500 to-orange-700' }
+  if (count >= 20) return { tier: 'D', label: 'Below Average', color: 'bg-gradient-to-br from-orange-600 to-red-800' }
+  return { tier: 'F', label: 'Trash Tier', color: 'bg-gradient-to-br from-red-600 to-red-900' }
+}
+
 export default function ExportImage({ stats, activityType = null, name }: ExportImageProps) {
   const displayStats = calculateFilteredStats(stats, activityType)
 
@@ -48,7 +57,7 @@ export default function ExportImage({ stats, activityType = null, name }: Export
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-purple-600/10 blur-[100px] rounded-full"></div>
 
       {/* Main Content Container */}
-      <div className="relative z-10 h-full flex flex-col p-16 border-[20px] border-white/5">
+      <div className="relative z-10 h-full flex flex-col p-12">
 
         {/* Header */}
         <div className="flex justify-between items-start mb-16">
@@ -111,10 +120,13 @@ export default function ExportImage({ stats, activityType = null, name }: Export
           </div>
 
           {/* Bottom Row */}
-          <div className="col-span-2 grid grid-cols-3 gap-8">
+          <div className={`col-span-2 grid gap-8 ${!activityType ? 'grid-cols-4' : 'grid-cols-3'}`}>
             <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
               <div className="text-xl font-mono text-yellow-400 mb-2">CALORIES</div>
               <div className="text-5xl font-bold text-white">{Math.round(displayStats.totalCalories / 1000)}k</div>
+              <div className="text-sm text-white/60 mt-2">
+                aka {Math.round(displayStats.totalCalories / 190)} Krispy Kreme donuts 🍩
+              </div>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
@@ -122,10 +134,22 @@ export default function ExportImage({ stats, activityType = null, name }: Export
               <div className="text-5xl font-bold text-white">{displayStats.longestActivity.distance.toFixed(1)}<span className="text-2xl text-white/50 ml-1">km</span></div>
             </div>
 
-            <div className="bg-white/5 border border-white/10 rounded-3xl p-8 flex items-center justify-center bg-gradient-to-br from-blue-600 to-purple-600">
+            {!activityType && (
+              <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+                <div className="text-xl font-mono text-blue-400 mb-2">KUDOS</div>
+                <div className="text-5xl font-bold text-white">{displayStats.totalKudos}</div>
+                <div className="text-sm text-white/60 mt-2">
+                  {displayStats.avgKudosPerActivity.toFixed(1)} per activity
+                </div>
+              </div>
+            )}
+
+            <div className={`bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col items-center justify-center ${getTier(displayStats.totalActivities).color}`}>
               <div className="text-center">
-                <div className="text-2xl font-bold text-white mb-1">STRAVA</div>
-                <div className="text-sm text-white/80">WRAPPED 2025</div>
+                <div className="text-sm font-mono text-white/60 mb-1 uppercase tracking-widest">2025 Grade</div>
+                <div className={`${!activityType ? 'text-5xl' : 'text-6xl'} font-black text-white mb-1 whitespace-nowrap`} style={{ textShadow: '0 0 20px currentColor' }}>
+                  {getTier(displayStats.totalActivities).tier}-Tier
+                </div>
               </div>
             </div>
           </div>

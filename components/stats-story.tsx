@@ -96,7 +96,7 @@ export default function StatsStory({ stats, onReset, onComplete, name }: StatsSt
           <p className="text-2xl text-white/80 font-mono uppercase tracking-widest mb-6">calories torched</p>
           <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm inline-block">
             <p className="text-lg text-white/90 font-medium">
-              That's about <span className="text-orange-400 font-bold">{Math.round(displayStats.totalCalories / 190)}</span> Krispy Kreme donuts 🍩
+              aka <span className="text-orange-400 font-bold">{Math.round(displayStats.totalCalories / 190)}</span> Krispy Kreme donuts 🍩
             </p>
           </div>
         </div>

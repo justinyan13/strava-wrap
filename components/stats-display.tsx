@@ -87,7 +87,7 @@ export default function StatsDisplay({ stats, onReset, name }: StatsDisplayProps
       }
 
       const link = document.createElement("a")
-      link.download = `strava-wrapped-${selectedActivityType === "All" ? "all" : selectedActivityType}-${new Date().getTime()}.png`
+      link.download = `stravawrap.vercel.app-${selectedActivityType === "All" ? "all" : selectedActivityType}.png`
       link.href = dataUrl
       document.body.appendChild(link)
       link.click()
@@ -156,7 +156,7 @@ export default function StatsDisplay({ stats, onReset, name }: StatsDisplayProps
                 disabled={isExporting}
                 className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_20px_rgba(var(--primary),0.5)] transition-all hover:scale-105"
               >
-                {isExporting ? "INITIALIZING..." : "EXPORT HUD"}
+                {isExporting ? "INITIALIZING..." : "EXPORT TO IG STORY"}
               </Button>
 
               <Button
@@ -228,6 +228,9 @@ export default function StatsDisplay({ stats, onReset, name }: StatsDisplayProps
                 </p>
                 <p className="text-sm text-muted-foreground">cal</p>
               </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                aka {Math.round(displayStats.totalCalories / 190)} Krispy Kreme donuts 🍩
+              </p>
             </div>
 
             {/* Middle Row */}
@@ -261,6 +264,22 @@ export default function StatsDisplay({ stats, onReset, name }: StatsDisplayProps
                 📅
               </div>
             </div>
+
+            {/* Kudos - Only on All page */}
+            {selectedActivityType === "All" && (
+              <div className="glass-panel p-6 rounded-3xl md:col-span-2 flex items-center justify-between group hover:border-yellow-500/50 transition-all duration-500">
+                <div>
+                  <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Kudos Received</p>
+                  <p className="text-4xl font-bold text-white">{displayStats.totalKudos}</p>
+                  <p className="text-sm text-yellow-500 mt-1">
+                    {displayStats.avgKudosPerActivity.toFixed(1)} per activity
+                  </p>
+                </div>
+                <div className="text-6xl opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300">
+                  👍
+                </div>
+              </div>
+            )}
 
             {/* Longest Activity - Full Width */}
             {displayStats.longestActivity.distance > 0 && (

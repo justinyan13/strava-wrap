@@ -14,20 +14,22 @@ export default function UploadZone({ onSubmit, loading }: UploadZoneProps) {
   const [activitiesFile, setActivitiesFile] = useState<File | null>(null)
   const [reactionsFile, setReactionsFile] = useState<File | null>(null)
   const [name, setName] = useState("")
-  const [runningEmojis, setRunningEmojis] = useState(1)
+  const [currentEmojiIndex, setCurrentEmojiIndex] = useState(0)
   const [showAnimation, setShowAnimation] = useState(false)
   const [showUploadZone, setShowUploadZone] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  // Animate running emojis during processing
+  const LOADING_EMOJIS = ['🏊‍♀️', '🚴', '🏃', '🏋️']
+
+  // Animate emojis during processing
   useEffect(() => {
     if (loading || showAnimation) {
       const interval = setInterval(() => {
-        setRunningEmojis((prev) => (prev >= 5 ? 1 : prev + 1))
+        setCurrentEmojiIndex((prev) => (prev + 1) % LOADING_EMOJIS.length)
       }, 500)
       return () => clearInterval(interval)
     } else {
-      setRunningEmojis(1)
+      setCurrentEmojiIndex(0)
     }
   }, [loading, showAnimation])
 
@@ -150,7 +152,7 @@ export default function UploadZone({ onSubmit, loading }: UploadZoneProps) {
             <div className="flex flex-col items-center gap-4">
               {(loading || showAnimation) ? (
                 <div className="flex flex-col items-center gap-4">
-                  <div className="text-4xl">{'🏃‍♀️'.repeat(runningEmojis)}</div>
+                  <div className="text-6xl animate-bounce">{LOADING_EMOJIS[currentEmojiIndex]}</div>
                   <p className="text-foreground font-semibold text-base">Processing your data...</p>
                 </div>
               ) : (
