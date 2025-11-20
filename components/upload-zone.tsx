@@ -99,9 +99,9 @@ export default function UploadZone({ onSubmit, loading }: UploadZoneProps) {
     <div className="flex flex-col items-center justify-center min-h-screen px-4 pt-32">
       <div className="w-full max-w-2xl">
         {/* Header */}
-        <div className="w-full text-center mb-12">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 bg-clip-text text-transparent whitespace-nowrap">Strava Wrapped 2025</h1>
-          <p className="text-lg text-muted-foreground mb-8">
+        <div className="w-full text-center mb-8 md:mb-12">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 bg-clip-text text-transparent whitespace-normal md:whitespace-nowrap leading-tight">Strava Wrapped 2025</h1>
+          <p className="text-base md:text-lg text-muted-foreground mb-6 md:mb-8 px-4">
             Upload your Strava data to see your personalized 2025 wrapped.
           </p>
 
@@ -136,7 +136,7 @@ export default function UploadZone({ onSubmit, loading }: UploadZoneProps) {
             onDragLeave={handleDrag}
             onDragOver={handleDrag}
             onDrop={handleDrop}
-            className={`border-2 border-dashed rounded-3xl p-8 text-center transition-all cursor-pointer ${isDragActive ? "border-primary/50 bg-primary/5" : "border-muted-foreground/30 hover:border-primary/30"
+            className={`border-2 border-dashed rounded-3xl p-6 md:p-8 text-center transition-all cursor-pointer ${isDragActive ? "border-primary/50 bg-primary/5" : "border-muted-foreground/30 hover:border-primary/30"
               }`}
           >
             <input

@@ -129,17 +129,17 @@ export default function StatsDisplay({ stats, onReset, name }: StatsDisplayProps
           {/* Header */}
           <div className="flex flex-col md:flex-row justify-between items-end gap-6 border-b border-white/10 pb-8">
             <div>
-              <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50 mb-2">
+              <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50 mb-2">
                 2025
               </h1>
-              <h2 className="text-2xl md:text-3xl font-bold text-primary tracking-tight neon-text uppercase">
+              <h2 className="text-xl md:text-3xl font-bold text-primary tracking-tight neon-text uppercase">
                 {name}'S YEAR IN SPORT
               </h2>
             </div>
 
-            <div className="flex flex-wrap gap-3 items-center">
+            <div className="flex flex-wrap gap-3 items-center w-full md:w-auto">
               <Select value={selectedActivityType} onValueChange={setSelectedActivityType}>
-                <SelectTrigger className="w-[180px] bg-card/50 border-white/10 backdrop-blur-md">
+                <SelectTrigger className="w-full md:w-[180px] bg-card/50 border-white/10 backdrop-blur-md">
                   <SelectValue placeholder="Filter by activity" />
                 </SelectTrigger>
                 <SelectContent>
@@ -151,21 +151,23 @@ export default function StatsDisplay({ stats, onReset, name }: StatsDisplayProps
                 </SelectContent>
               </Select>
 
-              <Button
-                onClick={handleExport}
-                disabled={isExporting}
-                className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_20px_rgba(var(--primary),0.5)] transition-all hover:scale-105"
-              >
-                {isExporting ? "INITIALIZING..." : "EXPORT TO IG STORY"}
-              </Button>
+              <div className="flex gap-3 w-full md:w-auto">
+                <Button
+                  onClick={handleExport}
+                  disabled={isExporting}
+                  className="flex-1 md:flex-none bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_20px_rgba(var(--primary),0.5)] transition-all hover:scale-105"
+                >
+                  {isExporting ? "INITIALIZING..." : "EXPORT TO IG STORY"}
+                </Button>
 
-              <Button
-                onClick={onReset}
-                variant="outline"
-                className="border-white/10 hover:bg-white/5 hover:text-white"
-              >
-                UPLOAD NEW
-              </Button>
+                <Button
+                  onClick={onReset}
+                  variant="outline"
+                  className="flex-1 md:flex-none border-white/10 hover:bg-white/5 hover:text-white"
+                >
+                  UPLOAD NEW
+                </Button>
+              </div>
             </div>
           </div>
 
@@ -182,7 +184,7 @@ export default function StatsDisplay({ stats, onReset, name }: StatsDisplayProps
                 </div>
               </div>
               <div>
-                <p className="text-8xl font-black tracking-tighter text-white group-hover:neon-text transition-all duration-300">
+                <p className="text-6xl md:text-8xl font-black tracking-tighter text-white group-hover:neon-text transition-all duration-300">
                   {displayStats.totalActivities}
                 </p>
               </div>
@@ -240,7 +242,7 @@ export default function StatsDisplay({ stats, onReset, name }: StatsDisplayProps
               <div className="glass-panel p-6 rounded-3xl md:col-span-2 flex items-center justify-between group hover:border-chart-5/50 transition-all duration-500">
                 <div>
                   <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Top Sport</p>
-                  <p className="text-4xl font-bold text-white">{displayStats.favoriteActivityType}</p>
+                  <p className="text-3xl md:text-4xl font-bold text-white">{displayStats.favoriteActivityType}</p>
                   <p className="text-sm text-primary mt-1">
                     {displayStats.activityTypes.find((t) => t.name === displayStats.favoriteActivityType)?.count || 0} sessions
                   </p>
@@ -255,7 +257,7 @@ export default function StatsDisplay({ stats, onReset, name }: StatsDisplayProps
             <div className="glass-panel p-6 rounded-3xl md:col-span-2 flex items-center justify-between group hover:border-primary/50 transition-all duration-500">
               <div>
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Peak Month</p>
-                <p className="text-4xl font-bold text-white">{displayStats.busiestMonth.month || "N/A"}</p>
+                <p className="text-3xl md:text-4xl font-bold text-white">{displayStats.busiestMonth.month || "N/A"}</p>
                 <p className="text-sm text-primary mt-1">
                   {displayStats.busiestMonth.count} activities
                 </p>
@@ -270,7 +272,7 @@ export default function StatsDisplay({ stats, onReset, name }: StatsDisplayProps
               <div className="glass-panel p-6 rounded-3xl md:col-span-2 flex items-center justify-between group hover:border-yellow-500/50 transition-all duration-500">
                 <div>
                   <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Kudos Received</p>
-                  <p className="text-4xl font-bold text-white">{displayStats.totalKudos}</p>
+                  <p className="text-3xl md:text-4xl font-bold text-white">{displayStats.totalKudos}</p>
                   <p className="text-sm text-yellow-500 mt-1">
                     {displayStats.avgKudosPerActivity.toFixed(1)} per activity
                   </p>
@@ -299,11 +301,11 @@ export default function StatsDisplay({ stats, onReset, name }: StatsDisplayProps
                   <div className="flex gap-8 md:gap-12 text-right">
                     <div>
                       <p className="text-xs text-muted-foreground uppercase mb-1">Distance</p>
-                      <p className="text-3xl font-bold text-white">{displayStats.longestActivity.distance.toFixed(1)} km</p>
+                      <p className="text-2xl md:text-3xl font-bold text-white">{displayStats.longestActivity.distance.toFixed(1)} km</p>
                     </div>
                     <div>
                       <p className="text-xs text-muted-foreground uppercase mb-1">Duration</p>
-                      <p className="text-3xl font-bold text-white">{formatTime(displayStats.longestActivity.time)}</p>
+                      <p className="text-2xl md:text-3xl font-bold text-white">{formatTime(displayStats.longestActivity.time)}</p>
                     </div>
                   </div>
                 </div>

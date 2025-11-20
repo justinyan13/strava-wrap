@@ -41,11 +41,11 @@ export default function StatsStory({ stats, onReset, onComplete, name }: StatsSt
       emoji: "⚡",
       bgClass: "bg-black",
       content: (
-        <div className="text-center">
-          <p className="text-6xl font-black mb-4 tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-white uppercase">
+        <div className="text-center px-4">
+          <p className="text-4xl md:text-6xl font-black mb-4 tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-white uppercase">
             {name}'S YEAR IN SPORT
           </p>
-          <p className="text-xl text-muted-foreground">Ready to see your stats?</p>
+          <p className="text-lg md:text-xl text-muted-foreground">Ready to see your stats?</p>
         </div>
       ),
     },
@@ -55,9 +55,9 @@ export default function StatsStory({ stats, onReset, onComplete, name }: StatsSt
       emoji: "🏃",
       bgClass: "bg-black",
       content: (
-        <div className="text-center">
-          <p className="text-8xl font-black mb-4 text-primary neon-text">{displayStats.totalActivities}</p>
-          <p className="text-2xl text-white/80 font-mono uppercase tracking-widest">sessions crushed</p>
+        <div className="text-center px-4">
+          <p className="text-6xl md:text-8xl font-black mb-4 text-primary neon-text">{displayStats.totalActivities}</p>
+          <p className="text-xl md:text-2xl text-white/80 font-mono uppercase tracking-widest">sessions crushed</p>
         </div>
       ),
     },
@@ -67,9 +67,9 @@ export default function StatsStory({ stats, onReset, onComplete, name }: StatsSt
       emoji: "👟",
       bgClass: "bg-black",
       content: (
-        <div className="text-center">
-          <p className="text-8xl font-black mb-4 text-chart-2 neon-text">{displayStats.totalDistance.toFixed(0)}</p>
-          <p className="text-2xl text-white/80 font-mono uppercase tracking-widest">kilometers</p>
+        <div className="text-center px-4">
+          <p className="text-6xl md:text-8xl font-black mb-4 text-chart-2 neon-text">{displayStats.totalDistance.toFixed(0)}</p>
+          <p className="text-xl md:text-2xl text-white/80 font-mono uppercase tracking-widest">kilometers</p>
         </div>
       ),
     },
@@ -79,9 +79,9 @@ export default function StatsStory({ stats, onReset, onComplete, name }: StatsSt
       emoji: "🕐",
       bgClass: "bg-black",
       content: (
-        <div className="text-center">
-          <p className="text-7xl font-black mb-4 text-chart-3 neon-text">{formatTime(displayStats.totalMovingTime)}</p>
-          <p className="text-2xl text-white/80 font-mono uppercase tracking-widest">in the zone</p>
+        <div className="text-center px-4">
+          <p className="text-5xl md:text-7xl font-black mb-4 text-chart-3 neon-text">{formatTime(displayStats.totalMovingTime)}</p>
+          <p className="text-xl md:text-2xl text-white/80 font-mono uppercase tracking-widest">in the zone</p>
         </div>
       ),
     },
@@ -91,11 +91,11 @@ export default function StatsStory({ stats, onReset, onComplete, name }: StatsSt
       emoji: "🔥",
       bgClass: "bg-black",
       content: (
-        <div className="text-center">
-          <p className="text-8xl font-black mb-4 text-orange-500 neon-text">{displayStats.totalCalories.toLocaleString()}</p>
-          <p className="text-2xl text-white/80 font-mono uppercase tracking-widest mb-6">calories torched</p>
-          <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm inline-block">
-            <p className="text-lg text-white/90 font-medium">
+        <div className="text-center px-4">
+          <p className="text-5xl md:text-8xl font-black mb-4 text-orange-500 neon-text">{displayStats.totalCalories.toLocaleString()}</p>
+          <p className="text-xl md:text-2xl text-white/80 font-mono uppercase tracking-widest mb-6">calories torched</p>
+          <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm inline-block max-w-full">
+            <p className="text-base md:text-lg text-white/90 font-medium">
               aka <span className="text-orange-400 font-bold">{Math.round(displayStats.totalCalories / 190)}</span> Krispy Kreme donuts 🍩
             </p>
           </div>
@@ -108,12 +108,12 @@ export default function StatsStory({ stats, onReset, onComplete, name }: StatsSt
       emoji: "🏅",
       bgClass: "bg-black",
       content: (
-        <div className="text-center">
-          <p className="text-6xl font-black mb-4 text-chart-4 neon-text">{displayStats.favoriteActivityType}</p>
-          <p className="text-3xl text-white font-bold mb-2">
+        <div className="text-center px-4">
+          <p className="text-4xl md:text-6xl font-black mb-4 text-chart-4 neon-text break-words">{displayStats.favoriteActivityType}</p>
+          <p className="text-2xl md:text-3xl text-white font-bold mb-2">
             {displayStats.activityTypes.find((t) => t.name === displayStats.favoriteActivityType)?.count || 0}
           </p>
-          <p className="text-xl text-white/60 font-mono uppercase tracking-widest">sessions</p>
+          <p className="text-lg md:text-xl text-white/60 font-mono uppercase tracking-widest">sessions</p>
         </div>
       ),
     },
@@ -123,11 +123,11 @@ export default function StatsStory({ stats, onReset, onComplete, name }: StatsSt
       emoji: "🏆",
       bgClass: "bg-black",
       content: displayStats.longestActivity.distance > 0 ? (
-        <div className="text-center">
-          <p className="text-3xl font-bold mb-4 text-white">{displayStats.longestActivity.name}</p>
+        <div className="text-center px-4">
+          <p className="text-2xl md:text-3xl font-bold mb-4 text-white break-words">{displayStats.longestActivity.name}</p>
           <div className="space-y-4">
-            <p className="text-7xl font-black text-chart-5 neon-text">{displayStats.longestActivity.distance.toFixed(1)} km</p>
-            <p className="text-2xl text-white/60 font-mono">{formatTime(displayStats.longestActivity.time)}</p>
+            <p className="text-5xl md:text-7xl font-black text-chart-5 neon-text">{displayStats.longestActivity.distance.toFixed(1)} km</p>
+            <p className="text-xl md:text-2xl text-white/60 font-mono">{formatTime(displayStats.longestActivity.time)}</p>
           </div>
         </div>
       ) : (
@@ -214,10 +214,10 @@ export default function StatsStory({ stats, onReset, onComplete, name }: StatsSt
           }}
         />
 
-        <div className="text-center px-8 max-w-4xl z-0 animate-in fade-in zoom-in duration-500 slide-in-from-bottom-10">
-          <div className="text-8xl mb-8 animate-bounce drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">{slide.emoji}</div>
-          <h2 className="text-2xl md:text-3xl font-bold mb-8 text-white/60 font-mono uppercase tracking-[0.2em]">{slide.title}</h2>
-          <div className="text-4xl md:text-5xl">{slide.content}</div>
+        <div className="text-center px-4 md:px-8 max-w-4xl z-0 animate-in fade-in zoom-in duration-500 slide-in-from-bottom-10">
+          <div className="text-6xl md:text-8xl mb-6 md:mb-8 animate-bounce drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">{slide.emoji}</div>
+          <h2 className="text-xl md:text-3xl font-bold mb-6 md:mb-8 text-white/60 font-mono uppercase tracking-[0.2em]">{slide.title}</h2>
+          <div className="text-3xl md:text-5xl w-full">{slide.content}</div>
         </div>
 
         {/* Navigation hints */}
