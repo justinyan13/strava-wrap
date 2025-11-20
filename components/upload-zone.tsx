@@ -242,7 +242,7 @@ export default function UploadZone({ onSubmit, loading }: UploadZoneProps) {
                   <div className="mt-4 space-y-4">
                     <div className="space-y-2 text-left">
                       <label htmlFor="name" className="text-sm font-medium text-foreground">
-                        Your Name <span className="text-red-500">*</span>
+                        What's your first name? <span className="text-red-500">*</span>
                       </label>
                       <input
                         id="name"
