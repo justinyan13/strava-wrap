@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   title: "Strava Wrapped 2025",
   description: "Your activity stats wrapped - A year in motion",
   generator: "v0.app",
+  icons: {
+    icon: "/icon.svg",
+  },
 }
 
 export default function RootLayout({
