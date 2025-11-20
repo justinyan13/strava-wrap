@@ -147,7 +147,7 @@ export default function StatsDisplay({ stats, onReset, name }: StatsDisplayProps
         />
       </div>
 
-      <div className="min-h-screen bg-transparent py-12 px-4">
+      <div className="min-h-screen bg-transparent py-12 px-4 pb-20">
         <div className="max-w-6xl mx-auto space-y-12" ref={exportRef}>
 
           {/* Header */}
