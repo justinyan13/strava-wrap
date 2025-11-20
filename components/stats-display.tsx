@@ -86,8 +86,32 @@ export default function StatsDisplay({ stats, onReset, name }: StatsDisplayProps
         throw new Error("Failed to generate image")
       }
 
+      const filename = `stravawrap.vercel.app-${selectedActivityType === "All" ? "all" : selectedActivityType}.png`
+
+      // Check for Web Share API support
+      if (navigator.share) {
+        try {
+          const response = await fetch(dataUrl)
+          const blob = await response.blob()
+          const file = new File([blob], filename, { type: 'image/png' })
+
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: 'Strava Wrapped 2025',
+              text: 'Check out my year in sport!',
+            })
+            return // Exit if share was successful
+          }
+        } catch (shareError) {
+          console.warn("Web Share API failed, falling back to download:", shareError)
+          // Continue to fallback
+        }
+      }
+
+      // Fallback to download
       const link = document.createElement("a")
-      link.download = `stravawrap.vercel.app-${selectedActivityType === "All" ? "all" : selectedActivityType}.png`
+      link.download = filename
       link.href = dataUrl
       document.body.appendChild(link)
       link.click()
