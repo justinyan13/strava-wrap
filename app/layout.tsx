@@ -26,7 +26,7 @@ export default function RootLayout({
         <Analytics />
 
         {/* Footer Text */}
-        <div className="fixed bottom-4 left-4 z-50 text-xs text-white/40 font-mono">
+        <div className="fixed bottom-4 left-4 z-50 text-xs text-white/40 font-mono flex items-center h-[30px]">
           Made with ❤️ by Justin Yan
         </div>
 
