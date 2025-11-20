@@ -155,7 +155,7 @@ export default function UploadZone({ onSubmit, loading }: UploadZoneProps) {
                   <div className="text-6xl animate-bounce">{LOADING_EMOJIS[currentEmojiIndex]}</div>
                   <p className="text-foreground font-semibold text-base">Processing your data...</p>
                 </div>
-              ) : (
+              ) : (!activitiesFile && !reactionsFile) ? (
                 <>
                   <svg className="w-12 h-12 text-muted-foreground/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
@@ -180,12 +180,12 @@ export default function UploadZone({ onSubmit, loading }: UploadZoneProps) {
                     Select Files
                   </button>
                 </>
-              )}
+              ) : null}
             </div>
 
             {/* File Status */}
             {(activitiesFile || reactionsFile) && !loading && !showAnimation && (
-              <div className="mt-6 space-y-3 w-full">
+              <div className="space-y-3 w-full">
                 <div className="text-sm font-medium text-foreground mb-2">Uploaded Files:</div>
 
                 {activitiesFile && (
@@ -219,16 +219,22 @@ export default function UploadZone({ onSubmit, loading }: UploadZoneProps) {
                 )}
 
                 {!activitiesFile && (
-                  <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/50 border border-dashed border-border">
+                  <div
+                    onClick={() => fileInputRef.current?.click()}
+                    className="flex items-center gap-2 p-3 rounded-lg bg-muted/50 border border-dashed border-border cursor-pointer hover:bg-muted transition-colors"
+                  >
                     <span className="text-muted-foreground">○</span>
-                    <span className="text-sm text-muted-foreground">activities.csv</span>
+                    <span className="text-sm text-muted-foreground">activities.csv (Click to upload)</span>
                   </div>
                 )}
 
                 {!reactionsFile && (
-                  <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/50 border border-dashed border-border">
+                  <div
+                    onClick={() => fileInputRef.current?.click()}
+                    className="flex items-center gap-2 p-3 rounded-lg bg-muted/50 border border-dashed border-border cursor-pointer hover:bg-muted transition-colors"
+                  >
                     <span className="text-muted-foreground">○</span>
-                    <span className="text-sm text-muted-foreground">reactions.csv</span>
+                    <span className="text-sm text-muted-foreground">reactions.csv (Click to upload)</span>
                   </div>
                 )}
 
