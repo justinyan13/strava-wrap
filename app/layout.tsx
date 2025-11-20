@@ -42,6 +42,11 @@ export default function RootLayout({
         {children}
         <Analytics />
 
+        {/* Footer Text */}
+        <div className="fixed bottom-4 left-4 z-50 text-xs text-white/40 font-mono">
+          Made with ❤️ by Justin Yan
+        </div>
+
         {/* Feedback Button */}
         <FeedbackModal />
       </body>
