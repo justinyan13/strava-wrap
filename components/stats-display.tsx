@@ -86,7 +86,7 @@ export default function StatsDisplay({ stats, onReset, name }: StatsDisplayProps
         throw new Error("Failed to generate image")
       }
 
-      const filename = `stravawrap.vercel.app-${selectedActivityType === "All" ? "all" : selectedActivityType}.png`
+      const filename = `stravawrap.com-${selectedActivityType === "All" ? "all" : selectedActivityType}.png`
 
       // Check for Web Share API support
       if (navigator.share) {
