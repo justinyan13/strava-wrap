@@ -15,6 +15,9 @@ import { toPng } from "html-to-image"
 import ExportImage from "./export-image"
 import { cn } from "@/lib/utils"
 
+// import { track } from "@vercel/analytics/react"
+import { sendGAEvent } from "@next/third-parties/google"
+
 interface StatsDisplayProps {
   stats: ActivityStats
   onReset: () => void
@@ -101,6 +104,7 @@ export default function StatsDisplay({ stats, onReset, name }: StatsDisplayProps
               title: 'Strava Wrapped 2025',
               text: 'Check out my year in sport!',
             })
+            sendGAEvent('event', 'export_card', { method: 'share', activityType: selectedActivityType })
             return // Exit if share was successful
           }
         } catch (shareError) {
@@ -116,6 +120,7 @@ export default function StatsDisplay({ stats, onReset, name }: StatsDisplayProps
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
+      sendGAEvent('event', 'export_card', { method: 'download', activityType: selectedActivityType })
 
     } catch (error) {
       console.error("Error exporting image:", error)
